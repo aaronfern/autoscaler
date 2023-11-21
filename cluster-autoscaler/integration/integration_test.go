@@ -3,14 +3,15 @@ package integration
 import (
 	"context"
 	"fmt"
-	. "github.com/onsi/ginkgo/v2"
-	. "github.com/onsi/gomega"
 	"io/ioutil"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/util/retry"
 	"os"
 	"regexp"
 	"strings"
+
+	. "github.com/onsi/ginkgo/v2"
+	. "github.com/onsi/gomega"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/util/retry"
 )
 
 var (
@@ -324,7 +325,7 @@ func (driver *Driver) controllerTests() {
 				By("Deploying the workload")
 				Expect(driver.deployLargeWorkload(1, scaleUpWorkload, workerWithThreeZones, false)).To(BeNil())
 				By("checking that scale up didn't trigger because of no machine satisfying the requirement")
-				skippedRegexp, _ := regexp.Compile("Pod large-scale-up-pod-.* can't be scheduled on .*, predicate checking error: Insufficient cpu; predicateName=NodeResourcesFit; reasons: Insufficient cpu;")
+				skippedRegexp, _ := regexp.Compile("Pod default/large-scale-up-pod-.* can't be scheduled on .*, predicate checking error: Insufficient cpu; predicateName=NodeResourcesFit; reasons: Insufficient cpu;")
 				Eventually(func() bool {
 					data, _ := ioutil.ReadFile(CALogFile)
 					return skippedRegexp.Match(data)
