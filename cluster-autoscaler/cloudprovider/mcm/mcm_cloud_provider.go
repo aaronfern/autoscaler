@@ -457,52 +457,48 @@ func (machinedeployment *MachineDeployment) Nodes() ([]cloudprovider.Instance, e
 // GetOptions returns NodeGroupAutoscalingOptions that should be used for this particular
 // NodeGroup. Returning a nil will result in using default options.
 // Implementation optional.
-// TODO: add proper implementation
 func (machinedeployment *MachineDeployment) GetOptions(defaults config.NodeGroupAutoscalingOptions) (*config.NodeGroupAutoscalingOptions, error) {
-	mcdSpec, err := machinedeployment.mcmManager.GetMachineDeploymentSpec(machinedeployment.Name)
+	mcdAnnotations, err := machinedeployment.mcmManager.GetMachineDeploymentAnnotations(machinedeployment.Name)
 	if err != nil {
 		return nil, err
 	}
-	if mcdSpec == nil {
-		return nil, fmt.Errorf("nil machinedeployment returned for %s", machinedeployment.Name)
-	}
 
 	scaleDownUtilThresholdValue := defaults.ScaleDownUtilizationThreshold
-	if _, ok := mcdSpec.Annotations[ScaleDownUtilizationThresholdAnnotation]; ok {
-		if floatVal, err := strconv.ParseFloat(mcdSpec.Annotations[ScaleDownUtilizationThresholdAnnotation], 64); err == nil {
+	if _, ok := mcdAnnotations[ScaleDownUtilizationThresholdAnnotation]; ok {
+		if floatVal, err := strconv.ParseFloat(mcdAnnotations[ScaleDownUtilizationThresholdAnnotation], 64); err == nil {
 			scaleDownUtilThresholdValue = floatVal
 		}
 	}
 	scaleDownGPUUtilThresholdValue := defaults.ScaleDownGpuUtilizationThreshold
-	if _, ok := mcdSpec.Annotations[ScaleDownGpuUtilizationThresholdAnnotation]; ok {
-		if floatVal, err := strconv.ParseFloat(mcdSpec.Annotations[ScaleDownGpuUtilizationThresholdAnnotation], 64); err == nil {
+	if _, ok := mcdAnnotations[ScaleDownGpuUtilizationThresholdAnnotation]; ok {
+		if floatVal, err := strconv.ParseFloat(mcdAnnotations[ScaleDownGpuUtilizationThresholdAnnotation], 64); err == nil {
 			scaleDownGPUUtilThresholdValue = floatVal
 		}
 	}
-	scaleDownUnneededTimeValue := defaults.ScaleDownUnneededTime
-	if _, ok := mcdSpec.Annotations[ScaleDownUnneededTimeAnnotation]; ok {
-		if timeValue, err := time.ParseDuration(mcdSpec.Annotations[ScaleDownUnneededTimeAnnotation]); err == nil {
-			scaleDownUnneededTimeValue = timeValue
+	scaleDownUnneededDuration := defaults.ScaleDownUnneededTime
+	if _, ok := mcdAnnotations[ScaleDownUnneededTimeAnnotation]; ok {
+		if timeValue, err := time.ParseDuration(mcdAnnotations[ScaleDownUnneededTimeAnnotation]); err == nil {
+			scaleDownUnneededDuration = timeValue
 		}
 	}
-	scaleDownUnreadyTimeValue := defaults.ScaleDownUnreadyTime
-	if _, ok := mcdSpec.Annotations[ScaleDownUnreadyTimeAnnotation]; ok {
-		if timeValue, err := time.ParseDuration(mcdSpec.Annotations[ScaleDownUnreadyTimeAnnotation]); err == nil {
-			scaleDownUnreadyTimeValue = timeValue
+	scaleDownUnreadyDuration := defaults.ScaleDownUnreadyTime
+	if _, ok := mcdAnnotations[ScaleDownUnreadyTimeAnnotation]; ok {
+		if timeValue, err := time.ParseDuration(mcdAnnotations[ScaleDownUnreadyTimeAnnotation]); err == nil {
+			scaleDownUnreadyDuration = timeValue
 		}
 	}
-	maxNodeProvisionTimeValue := defaults.MaxNodeProvisionTime
-	if _, ok := mcdSpec.Annotations[MaxNodeProvisionTimeAnnotation]; ok {
-		if timeValue, err := time.ParseDuration(mcdSpec.Annotations[MaxNodeProvisionTimeAnnotation]); err == nil {
-			maxNodeProvisionTimeValue = timeValue
+	maxNodeProvisionDuration := defaults.MaxNodeProvisionTime
+	if _, ok := mcdAnnotations[MaxNodeProvisionTimeAnnotation]; ok {
+		if timeValue, err := time.ParseDuration(mcdAnnotations[MaxNodeProvisionTimeAnnotation]); err == nil {
+			maxNodeProvisionDuration = timeValue
 		}
 	}
 	return &config.NodeGroupAutoscalingOptions{
 		ScaleDownUtilizationThreshold:    scaleDownUtilThresholdValue,
 		ScaleDownGpuUtilizationThreshold: scaleDownGPUUtilThresholdValue,
-		ScaleDownUnneededTime:            scaleDownUnneededTimeValue,
-		ScaleDownUnreadyTime:             scaleDownUnreadyTimeValue,
-		MaxNodeProvisionTime:             maxNodeProvisionTimeValue,
+		ScaleDownUnneededTime:            scaleDownUnneededDuration,
+		ScaleDownUnreadyTime:             scaleDownUnreadyDuration,
+		MaxNodeProvisionTime:             maxNodeProvisionDuration,
 	}, nil
 }
 
