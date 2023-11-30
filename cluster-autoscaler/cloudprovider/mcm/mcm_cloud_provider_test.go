@@ -20,11 +20,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	v1 "k8s.io/api/apps/v1"
 	"math"
 	"strings"
 	"testing"
 	"time"
+
+	v1 "k8s.io/api/apps/v1"
 
 	machinecodes "github.com/gardener/machine-controller-manager/pkg/util/provider/machinecodes/codes"
 	"k8s.io/autoscaler/cluster-autoscaler/cloudprovider"
@@ -685,8 +686,8 @@ func TestGetOptions(t *testing.T) {
 			g := NewWithT(t)
 			stop := make(chan struct{})
 			defer close(stop)
-			controlMachineObjects, targetCoreObjects := setupEnv(&entry.setup)
-			m, trackers, hasSyncedCacheFns := createMcmManager(t, stop, testNamespace, nil, controlMachineObjects, targetCoreObjects)
+			controlMachineObjects, targetCoreObjects, _ := setupEnv(&entry.setup)
+			m, trackers, hasSyncedCacheFns := createMcmManager(t, stop, testNamespace, nil, controlMachineObjects, targetCoreObjects, nil)
 			defer trackers.Stop()
 			waitForCacheSync(t, stop, hasSyncedCacheFns)
 
