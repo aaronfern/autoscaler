@@ -477,20 +477,20 @@ func (machinedeployment *MachineDeployment) GetOptions(defaults config.NodeGroup
 	}
 	scaleDownUnneededDuration := defaults.ScaleDownUnneededTime
 	if _, ok := mcdAnnotations[ScaleDownUnneededTimeAnnotation]; ok {
-		if timeValue, err := time.ParseDuration(mcdAnnotations[ScaleDownUnneededTimeAnnotation]); err == nil {
-			scaleDownUnneededDuration = timeValue
+		if durationVal, err := time.ParseDuration(mcdAnnotations[ScaleDownUnneededTimeAnnotation]); err == nil {
+			scaleDownUnneededDuration = durationVal
 		}
 	}
 	scaleDownUnreadyDuration := defaults.ScaleDownUnreadyTime
 	if _, ok := mcdAnnotations[ScaleDownUnreadyTimeAnnotation]; ok {
-		if timeValue, err := time.ParseDuration(mcdAnnotations[ScaleDownUnreadyTimeAnnotation]); err == nil {
-			scaleDownUnreadyDuration = timeValue
+		if durationVal, err := time.ParseDuration(mcdAnnotations[ScaleDownUnreadyTimeAnnotation]); err == nil {
+			scaleDownUnreadyDuration = durationVal
 		}
 	}
 	maxNodeProvisionDuration := defaults.MaxNodeProvisionTime
 	if _, ok := mcdAnnotations[MaxNodeProvisionTimeAnnotation]; ok {
-		if timeValue, err := time.ParseDuration(mcdAnnotations[MaxNodeProvisionTimeAnnotation]); err == nil {
-			maxNodeProvisionDuration = timeValue
+		if durationVal, err := time.ParseDuration(mcdAnnotations[MaxNodeProvisionTimeAnnotation]); err == nil {
+			maxNodeProvisionDuration = durationVal
 		}
 	}
 	return &config.NodeGroupAutoscalingOptions{
