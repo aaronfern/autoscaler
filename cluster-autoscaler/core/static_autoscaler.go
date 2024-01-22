@@ -434,15 +434,17 @@ func (a *StaticAutoscaler) RunOnce(currentTime time.Time) caerrors.AutoscalerErr
 	// Check if there has been a constant difference between the number of nodes in k8s and
 	// the number of nodes on the cloud provider side.
 	// TODO: andrewskim - add protection for ready AWS nodes.
-	fixedSomething, err := fixNodeGroupSize(autoscalingContext, a.clusterStateRegistry, currentTime)
-	if err != nil {
-		klog.Errorf("Failed to fix node group sizes: %v", err)
-		return caerrors.ToAutoscalerError(caerrors.CloudProviderError, err)
-	}
-	if fixedSomething {
-		klog.V(0).Infof("Some node group target size was fixed, skipping the iteration")
-		return nil
-	}
+
+	// FORK-CHANGE: Commented this code as it removes `Registered but long not Ready` nodes which causes issues like scaling below minimum size and removing ready nodes during meltdown scenario
+	// fixedSomething, err := fixNodeGroupSize(autoscalingContext, a.clusterStateRegistry, currentTime)
+	// if err != nil {
+	// 	klog.Errorf("Failed to fix node group sizes: %v", err)
+	// 	return caerrors.ToAutoscalerError(caerrors.CloudProviderError, err)
+	// }
+	// if fixedSomething {
+	// 	klog.V(0).Infof("Some node group target size was fixed, skipping the iteration")
+	// 	return nil
+	// }
 
 	metrics.UpdateLastTime(metrics.Autoscaling, time.Now())
 
