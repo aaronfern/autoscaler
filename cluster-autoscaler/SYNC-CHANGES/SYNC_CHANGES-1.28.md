@@ -17,6 +17,14 @@
 
 ## Changes made
  - See general release notes of 1.28.0: https://github.com/kubernetes/autoscaler/releases/tag/cluster-autoscaler-1.28.0
+ - New flag added: flag.String(config.SchedulerConfigFileFlag, "", "scheduler-config) allows changing configuration of in-tree scheduler plugins acting on PreFilter and Filter extension points")
+ - The followign options have been added per node group
+   ```
+   // ZeroOrMaxNodeScaling means that a node group should be scaled up to maximum size or down to zero nodes all at once instead of one-by-one.
+   ZeroOrMaxNodeScaling bool
+   // IgnoreDaemonSetsUtilization sets if daemonsets utilization should be considered during node scale-down
+   IgnoreDaemonSetsUtilization bool
+   ```
 
 ### During merging
   - Log message for the `scale up not possible case` was updated and an integration test that depended on it was updated
@@ -28,3 +36,6 @@
 
 ### Others
 - [Release matrix](../README.md#releases-gardenerautoscaler) of Gardener Autoscaler updated.
+- The `max-empty-bulk-delete` flag will be deprecated in k8s version 1.29. Please use `max-scale-down-parallelism` instead.
+- `parallelDrain` flag will be removed in future releases.
+- Parallel node group scale ups are now supported (ref: https://github.com/gardener/autoscaler/issues/268)
