@@ -18,7 +18,7 @@
 ## Changes made
  - See general release notes of 1.28.0: https://github.com/kubernetes/autoscaler/releases/tag/cluster-autoscaler-1.28.0
  - New flag added: flag.String(config.SchedulerConfigFileFlag, "", "scheduler-config) allows changing configuration of in-tree scheduler plugins acting on PreFilter and Filter extension points")
- - The followign options have been added per node group
+ - The following options have been added per node group
    ```
    // ZeroOrMaxNodeScaling means that a node group should be scaled up to maximum size or down to zero nodes all at once instead of one-by-one.
    ZeroOrMaxNodeScaling bool
