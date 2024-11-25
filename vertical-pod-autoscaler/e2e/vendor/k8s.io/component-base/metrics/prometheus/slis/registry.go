@@ -14,14 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package slis
+// +k8s:deepcopy-gen=package
+// +k8s:conversion-gen=k8s.io/cloud-provider/controllers/service/config
+// +k8s:conversion-gen=k8s.io/cloud-provider/controllers/service/config/v1alpha1
 
-import (
-	"k8s.io/component-base/metrics"
-)
-
-var (
-	// Registry exposes the SLI registry so that additional SLIs can be
-	// added on a per-component basis.
-	Registry = metrics.NewKubeRegistry()
-)
+package v1alpha1 // import "k8s.io/cloud-provider/controllers/service/config/v1alpha1"

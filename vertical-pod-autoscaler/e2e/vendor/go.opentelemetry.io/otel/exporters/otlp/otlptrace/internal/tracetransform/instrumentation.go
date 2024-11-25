@@ -1,4 +1,4 @@
-// Copyright The OpenTelemetry Authors
+// Copyright 2021 The etcd Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,19 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package tracetransform // import "go.opentelemetry.io/otel/exporters/otlp/otlptrace/internal/tracetransform"
+//go:build !windows && !solaris
+// +build !windows,!solaris
+
+package transport
 
 import (
-	"go.opentelemetry.io/otel/sdk/instrumentation"
-	commonpb "go.opentelemetry.io/proto/otlp/common/v1"
+	"syscall"
+
+	"golang.org/x/sys/unix"
 )
 
-func InstrumentationScope(il instrumentation.Scope) *commonpb.InstrumentationScope {
-	if il == (instrumentation.Scope{}) {
-		return nil
-	}
-	return &commonpb.InstrumentationScope{
-		Name:    il.Name,
-		Version: il.Version,
-	}
+func setReusePort(network, address string, conn syscall.RawConn) error {
+	return conn.Control(func(fd uintptr) {
+		syscall.SetsockoptInt(int(fd), syscall.SOL_SOCKET, unix.SO_REUSEPORT, 1)
+	})
+}
+
+func setReuseAddress(network, address string, conn syscall.RawConn) error {
+	return conn.Control(func(fd uintptr) {
+		syscall.SetsockoptInt(int(fd), syscall.SOL_SOCKET, unix.SO_REUSEADDR, 1)
+	})
 }

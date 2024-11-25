@@ -779,8 +779,6 @@ const (
 	DEVLINK_GENL_MCGRP_CONFIG_NAME              = "config"
 	DEVLINK_GENL_NAME                           = "devlink"
 	DEVLINK_GENL_VERSION                        = 0x1
-	DEVLINK_PORT_FN_CAP_IPSEC_CRYPTO            = 0x4
-	DEVLINK_PORT_FN_CAP_IPSEC_PACKET            = 0x8
 	DEVLINK_PORT_FN_CAP_MIGRATABLE              = 0x2
 	DEVLINK_PORT_FN_CAP_ROCE                    = 0x1
 	DEVLINK_SB_THRESHOLD_TO_ALPHA_MAX           = 0x14
@@ -2467,7 +2465,6 @@ const (
 	PR_MCE_KILL_GET                             = 0x22
 	PR_MCE_KILL_LATE                            = 0x0
 	PR_MCE_KILL_SET                             = 0x1
-	PR_MDWE_NO_INHERIT                          = 0x2
 	PR_MDWE_REFUSE_EXEC_GAIN                    = 0x1
 	PR_MPX_DISABLE_MANAGEMENT                   = 0x2c
 	PR_MPX_ENABLE_MANAGEMENT                    = 0x2b
@@ -3108,7 +3105,6 @@ const (
 	SOL_TIPC                                    = 0x10f
 	SOL_TLS                                     = 0x11a
 	SOL_UDP                                     = 0x11
-	SOL_VSOCK                                   = 0x11f
 	SOL_X25                                     = 0x106
 	SOL_XDP                                     = 0x11b
 	SOMAXCONN                                   = 0x1000

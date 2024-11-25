@@ -543,7 +543,7 @@ userAuthLoop:
 				return nil, parseError(msgUserAuthRequest)
 			}
 			algo := string(algoBytes)
-			if !contains(config.PublicKeyAuthAlgorithms, underlyingAlgo(algo)) {
+			if !contains(supportedPubKeyAuthAlgos, underlyingAlgo(algo)) {
 				authErr = fmt.Errorf("ssh: algorithm %q not accepted", algo)
 				break
 			}
@@ -610,7 +610,7 @@ userAuthLoop:
 				// algorithm name that corresponds to algo with
 				// sig.Format.  This is usually the same, but
 				// for certs, the names differ.
-				if !contains(config.PublicKeyAuthAlgorithms, sig.Format) {
+				if !contains(supportedPubKeyAuthAlgos, sig.Format) {
 					authErr = fmt.Errorf("ssh: algorithm %q not accepted", sig.Format)
 					break
 				}

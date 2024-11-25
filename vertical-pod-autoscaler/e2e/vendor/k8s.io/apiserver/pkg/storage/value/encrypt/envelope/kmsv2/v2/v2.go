@@ -14,5 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Package v2 contains definition of kms-plugin's serialized types.
+// Package v2 contains definition of kms-plugin's gRPC service.
 package v2

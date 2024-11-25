@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Kubernetes Authors.
+Copyright 2022 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 // +k8s:deepcopy-gen=package
-// +k8s:conversion-gen=k8s.io/controller-manager/config
+// +k8s:protobuf-gen=package
 // +k8s:openapi-gen=true
-// +groupName=controllermanager.config.k8s.io
+// +k8s:prerelease-lifecycle-gen=true
 
-package v1beta1 // import "k8s.io/controller-manager/config/v1beta1"
+// +groupName=certificates.k8s.io
+
+package v1alpha1 // import "k8s.io/api/certificates/v1alpha1"

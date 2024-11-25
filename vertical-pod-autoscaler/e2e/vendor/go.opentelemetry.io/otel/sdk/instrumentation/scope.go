@@ -1,4 +1,4 @@
-// Copyright The OpenTelemetry Authors
+// Copyright 2021 The etcd Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,15 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package instrumentation // import "go.opentelemetry.io/otel/sdk/instrumentation"
+//go:build solaris
+// +build solaris
 
-// Scope represents the instrumentation scope.
-type Scope struct {
-	// Name is the name of the instrumentation scope. This should be the
-	// Go package name of that scope.
-	Name string
-	// Version is the version of the instrumentation scope.
-	Version string
-	// SchemaURL of the telemetry emitted by the scope.
-	SchemaURL string
+package transport
+
+import (
+	"fmt"
+	"syscall"
+
+	"golang.org/x/sys/unix"
+)
+
+func setReusePort(network, address string, c syscall.RawConn) error {
+	return fmt.Errorf("port reuse is not supported on Solaris")
+}
+
+func setReuseAddress(network, address string, conn syscall.RawConn) error {
+	return conn.Control(func(fd uintptr) {
+		syscall.SetsockoptInt(int(fd), syscall.SOL_SOCKET, unix.SO_REUSEADDR, 1)
+	})
 }

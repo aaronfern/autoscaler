@@ -1,6 +1,3 @@
-//go:build !windows
-// +build !windows
-
 /*
 Copyright 2017 The Kubernetes Authors.
 
@@ -17,11 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package server
+// +k8s:deepcopy-gen=package
+// +groupName=external.metrics.k8s.io
 
-import (
-	"os"
-	"syscall"
-)
-
-var shutdownSignals = []os.Signal{os.Interrupt, syscall.SIGTERM}
+// Package external_metrics adds support for defining external metrics.
+package external_metrics // import "k8s.io/metrics/pkg/apis/external_metrics"

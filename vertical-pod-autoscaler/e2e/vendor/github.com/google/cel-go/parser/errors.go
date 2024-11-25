@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,19 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package parser
+// This file, and the {{.RootMod}} import, won't actually become part of
+// the resultant binary.
+//go:build modhack
+// +build modhack
 
-import (
-	"fmt"
+package api
 
-	"github.com/google/cel-go/common"
-)
-
-// parseErrors is a specialization of Errors.
-type parseErrors struct {
-	*common.Errors
-}
-
-func (e *parseErrors) syntaxError(l common.Location, message string) {
-	e.ReportError(l, fmt.Sprintf("Syntax error: %s", message))
-}
+// Necessary for safely adding multi-module repo. See: https://github.com/golang/go/wiki/Modules#is-it-possible-to-add-a-module-to-a-multi-module-repository
+import _ "google.golang.org/genproto/internal"

@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The Kubernetes Authors.
+Copyright 2023 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,15 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package filters
+package aggregated
 
-import "net/http"
+import (
+	"k8s.io/component-base/metrics"
+	"k8s.io/component-base/metrics/legacyregistry"
+)
 
-// WithContentType sets both the Content-Type and the X-Content-Type-Options (nosniff) header
-func WithContentType(handler http.Handler, contentType string) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", contentType)
-		w.Header().Set("X-Content-Type-Options", "nosniff")
-		handler.ServeHTTP(w, r)
-	})
+var (
+	regenerationCounter = metrics.NewCounter(
+		&metrics.CounterOpts{
+			Name:           "aggregator_discovery_aggregation_count_total",
+			Help:           "Counter of number of times discovery was aggregated",
+			StabilityLevel: metrics.ALPHA,
+		},
+	)
+)
+
+func init() {
+	legacyregistry.MustRegister(regenerationCounter)
 }
