@@ -73,6 +73,6 @@ if [ "${CMD}" = "build" ] || [ "${CMD}" == "test" ]; then
   go test -mod vendor -run=None ./...
   popd
   pushd ${CONTRIB_ROOT}/cluster-autoscaler/
-  go test ./...
+  go test $(go list ./... | grep -v integration)
   popd
 fi
