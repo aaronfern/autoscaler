@@ -1,8 +1,5 @@
-//go:build tools
-// +build tools
-
 /*
-Copyright 2024 The Kubernetes Authors.
+Copyright 2016 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,9 +14,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Package tools is here, such that we can version dependencies that our helpers in the Makefile and hack/ directory
-// use with the regular go.mod mechanism. They get downloaded with `go mod vendor` and scripts can directly reference
-// the executables used e.g. for generating CRDs, clients and informers.
-package tools
-
-import _ "k8s.io/code-generator"
+// Package handlers contains HTTP handlers to implement the apiserver APIs.
+package handlers // import "k8s.io/apiserver/pkg/endpoints/handlers"

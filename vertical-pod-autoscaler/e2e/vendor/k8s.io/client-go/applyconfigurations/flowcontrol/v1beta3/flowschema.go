@@ -19,7 +19,7 @@ limitations under the License.
 package v1beta3
 
 import (
-	certificatesv1alpha1 "k8s.io/api/certificates/v1alpha1"
+	flowcontrolv1beta3 "k8s.io/api/flowcontrol/v1beta3"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	managedfields "k8s.io/apimachinery/pkg/util/managedfields"
@@ -27,63 +27,64 @@ import (
 	v1 "k8s.io/client-go/applyconfigurations/meta/v1"
 )
 
-// ClusterTrustBundleApplyConfiguration represents an declarative configuration of the ClusterTrustBundle type for use
+// FlowSchemaApplyConfiguration represents an declarative configuration of the FlowSchema type for use
 // with apply.
-type ClusterTrustBundleApplyConfiguration struct {
+type FlowSchemaApplyConfiguration struct {
 	v1.TypeMetaApplyConfiguration    `json:",inline"`
 	*v1.ObjectMetaApplyConfiguration `json:"metadata,omitempty"`
-	Spec                             *ClusterTrustBundleSpecApplyConfiguration `json:"spec,omitempty"`
+	Spec                             *FlowSchemaSpecApplyConfiguration   `json:"spec,omitempty"`
+	Status                           *FlowSchemaStatusApplyConfiguration `json:"status,omitempty"`
 }
 
-// ClusterTrustBundle constructs an declarative configuration of the ClusterTrustBundle type for use with
+// FlowSchema constructs an declarative configuration of the FlowSchema type for use with
 // apply.
-func ClusterTrustBundle(name string) *ClusterTrustBundleApplyConfiguration {
-	b := &ClusterTrustBundleApplyConfiguration{}
+func FlowSchema(name string) *FlowSchemaApplyConfiguration {
+	b := &FlowSchemaApplyConfiguration{}
 	b.WithName(name)
-	b.WithKind("ClusterTrustBundle")
-	b.WithAPIVersion("certificates.k8s.io/v1alpha1")
+	b.WithKind("FlowSchema")
+	b.WithAPIVersion("flowcontrol.apiserver.k8s.io/v1beta3")
 	return b
 }
 
-// ExtractClusterTrustBundle extracts the applied configuration owned by fieldManager from
-// clusterTrustBundle. If no managedFields are found in clusterTrustBundle for fieldManager, a
-// ClusterTrustBundleApplyConfiguration is returned with only the Name, Namespace (if applicable),
+// ExtractFlowSchema extracts the applied configuration owned by fieldManager from
+// flowSchema. If no managedFields are found in flowSchema for fieldManager, a
+// FlowSchemaApplyConfiguration is returned with only the Name, Namespace (if applicable),
 // APIVersion and Kind populated. It is possible that no managed fields were found for because other
 // field managers have taken ownership of all the fields previously owned by fieldManager, or because
 // the fieldManager never owned fields any fields.
-// clusterTrustBundle must be a unmodified ClusterTrustBundle API object that was retrieved from the Kubernetes API.
-// ExtractClusterTrustBundle provides a way to perform a extract/modify-in-place/apply workflow.
+// flowSchema must be a unmodified FlowSchema API object that was retrieved from the Kubernetes API.
+// ExtractFlowSchema provides a way to perform a extract/modify-in-place/apply workflow.
 // Note that an extracted apply configuration will contain fewer fields than what the fieldManager previously
 // applied if another fieldManager has updated or force applied any of the previously applied fields.
 // Experimental!
-func ExtractClusterTrustBundle(clusterTrustBundle *certificatesv1alpha1.ClusterTrustBundle, fieldManager string) (*ClusterTrustBundleApplyConfiguration, error) {
-	return extractClusterTrustBundle(clusterTrustBundle, fieldManager, "")
+func ExtractFlowSchema(flowSchema *flowcontrolv1beta3.FlowSchema, fieldManager string) (*FlowSchemaApplyConfiguration, error) {
+	return extractFlowSchema(flowSchema, fieldManager, "")
 }
 
-// ExtractClusterTrustBundleStatus is the same as ExtractClusterTrustBundle except
+// ExtractFlowSchemaStatus is the same as ExtractFlowSchema except
 // that it extracts the status subresource applied configuration.
 // Experimental!
-func ExtractClusterTrustBundleStatus(clusterTrustBundle *certificatesv1alpha1.ClusterTrustBundle, fieldManager string) (*ClusterTrustBundleApplyConfiguration, error) {
-	return extractClusterTrustBundle(clusterTrustBundle, fieldManager, "status")
+func ExtractFlowSchemaStatus(flowSchema *flowcontrolv1beta3.FlowSchema, fieldManager string) (*FlowSchemaApplyConfiguration, error) {
+	return extractFlowSchema(flowSchema, fieldManager, "status")
 }
 
-func extractClusterTrustBundle(clusterTrustBundle *certificatesv1alpha1.ClusterTrustBundle, fieldManager string, subresource string) (*ClusterTrustBundleApplyConfiguration, error) {
-	b := &ClusterTrustBundleApplyConfiguration{}
-	err := managedfields.ExtractInto(clusterTrustBundle, internal.Parser().Type("io.k8s.api.certificates.v1alpha1.ClusterTrustBundle"), fieldManager, b, subresource)
+func extractFlowSchema(flowSchema *flowcontrolv1beta3.FlowSchema, fieldManager string, subresource string) (*FlowSchemaApplyConfiguration, error) {
+	b := &FlowSchemaApplyConfiguration{}
+	err := managedfields.ExtractInto(flowSchema, internal.Parser().Type("io.k8s.api.flowcontrol.v1beta3.FlowSchema"), fieldManager, b, subresource)
 	if err != nil {
 		return nil, err
 	}
-	b.WithName(clusterTrustBundle.Name)
+	b.WithName(flowSchema.Name)
 
-	b.WithKind("ClusterTrustBundle")
-	b.WithAPIVersion("certificates.k8s.io/v1alpha1")
+	b.WithKind("FlowSchema")
+	b.WithAPIVersion("flowcontrol.apiserver.k8s.io/v1beta3")
 	return b, nil
 }
 
 // WithKind sets the Kind field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the Kind field is set to the value of the last call.
-func (b *ClusterTrustBundleApplyConfiguration) WithKind(value string) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithKind(value string) *FlowSchemaApplyConfiguration {
 	b.Kind = &value
 	return b
 }
@@ -91,7 +92,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithKind(value string) *ClusterTr
 // WithAPIVersion sets the APIVersion field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the APIVersion field is set to the value of the last call.
-func (b *ClusterTrustBundleApplyConfiguration) WithAPIVersion(value string) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithAPIVersion(value string) *FlowSchemaApplyConfiguration {
 	b.APIVersion = &value
 	return b
 }
@@ -99,7 +100,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithAPIVersion(value string) *Clu
 // WithName sets the Name field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the Name field is set to the value of the last call.
-func (b *ClusterTrustBundleApplyConfiguration) WithName(value string) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithName(value string) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	b.Name = &value
 	return b
@@ -108,7 +109,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithName(value string) *ClusterTr
 // WithGenerateName sets the GenerateName field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the GenerateName field is set to the value of the last call.
-func (b *ClusterTrustBundleApplyConfiguration) WithGenerateName(value string) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithGenerateName(value string) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	b.GenerateName = &value
 	return b
@@ -117,7 +118,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithGenerateName(value string) *C
 // WithNamespace sets the Namespace field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the Namespace field is set to the value of the last call.
-func (b *ClusterTrustBundleApplyConfiguration) WithNamespace(value string) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithNamespace(value string) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	b.Namespace = &value
 	return b
@@ -126,7 +127,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithNamespace(value string) *Clus
 // WithUID sets the UID field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the UID field is set to the value of the last call.
-func (b *ClusterTrustBundleApplyConfiguration) WithUID(value types.UID) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithUID(value types.UID) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	b.UID = &value
 	return b
@@ -135,7 +136,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithUID(value types.UID) *Cluster
 // WithResourceVersion sets the ResourceVersion field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the ResourceVersion field is set to the value of the last call.
-func (b *ClusterTrustBundleApplyConfiguration) WithResourceVersion(value string) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithResourceVersion(value string) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	b.ResourceVersion = &value
 	return b
@@ -144,7 +145,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithResourceVersion(value string)
 // WithGeneration sets the Generation field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the Generation field is set to the value of the last call.
-func (b *ClusterTrustBundleApplyConfiguration) WithGeneration(value int64) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithGeneration(value int64) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	b.Generation = &value
 	return b
@@ -153,7 +154,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithGeneration(value int64) *Clus
 // WithCreationTimestamp sets the CreationTimestamp field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the CreationTimestamp field is set to the value of the last call.
-func (b *ClusterTrustBundleApplyConfiguration) WithCreationTimestamp(value metav1.Time) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithCreationTimestamp(value metav1.Time) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	b.CreationTimestamp = &value
 	return b
@@ -162,7 +163,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithCreationTimestamp(value metav
 // WithDeletionTimestamp sets the DeletionTimestamp field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the DeletionTimestamp field is set to the value of the last call.
-func (b *ClusterTrustBundleApplyConfiguration) WithDeletionTimestamp(value metav1.Time) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithDeletionTimestamp(value metav1.Time) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	b.DeletionTimestamp = &value
 	return b
@@ -171,7 +172,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithDeletionTimestamp(value metav
 // WithDeletionGracePeriodSeconds sets the DeletionGracePeriodSeconds field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the DeletionGracePeriodSeconds field is set to the value of the last call.
-func (b *ClusterTrustBundleApplyConfiguration) WithDeletionGracePeriodSeconds(value int64) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithDeletionGracePeriodSeconds(value int64) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	b.DeletionGracePeriodSeconds = &value
 	return b
@@ -181,7 +182,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithDeletionGracePeriodSeconds(va
 // and returns the receiver, so that objects can be build by chaining "With" function invocations.
 // If called multiple times, the entries provided by each call will be put on the Labels field,
 // overwriting an existing map entries in Labels field with the same key.
-func (b *ClusterTrustBundleApplyConfiguration) WithLabels(entries map[string]string) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithLabels(entries map[string]string) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	if b.Labels == nil && len(entries) > 0 {
 		b.Labels = make(map[string]string, len(entries))
@@ -196,7 +197,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithLabels(entries map[string]str
 // and returns the receiver, so that objects can be build by chaining "With" function invocations.
 // If called multiple times, the entries provided by each call will be put on the Annotations field,
 // overwriting an existing map entries in Annotations field with the same key.
-func (b *ClusterTrustBundleApplyConfiguration) WithAnnotations(entries map[string]string) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithAnnotations(entries map[string]string) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	if b.Annotations == nil && len(entries) > 0 {
 		b.Annotations = make(map[string]string, len(entries))
@@ -210,7 +211,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithAnnotations(entries map[strin
 // WithOwnerReferences adds the given value to the OwnerReferences field in the declarative configuration
 // and returns the receiver, so that objects can be build by chaining "With" function invocations.
 // If called multiple times, values provided by each call will be appended to the OwnerReferences field.
-func (b *ClusterTrustBundleApplyConfiguration) WithOwnerReferences(values ...*v1.OwnerReferenceApplyConfiguration) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithOwnerReferences(values ...*v1.OwnerReferenceApplyConfiguration) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	for i := range values {
 		if values[i] == nil {
@@ -224,7 +225,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithOwnerReferences(values ...*v1
 // WithFinalizers adds the given value to the Finalizers field in the declarative configuration
 // and returns the receiver, so that objects can be build by chaining "With" function invocations.
 // If called multiple times, values provided by each call will be appended to the Finalizers field.
-func (b *ClusterTrustBundleApplyConfiguration) WithFinalizers(values ...string) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithFinalizers(values ...string) *FlowSchemaApplyConfiguration {
 	b.ensureObjectMetaApplyConfigurationExists()
 	for i := range values {
 		b.Finalizers = append(b.Finalizers, values[i])
@@ -232,7 +233,7 @@ func (b *ClusterTrustBundleApplyConfiguration) WithFinalizers(values ...string) 
 	return b
 }
 
-func (b *ClusterTrustBundleApplyConfiguration) ensureObjectMetaApplyConfigurationExists() {
+func (b *FlowSchemaApplyConfiguration) ensureObjectMetaApplyConfigurationExists() {
 	if b.ObjectMetaApplyConfiguration == nil {
 		b.ObjectMetaApplyConfiguration = &v1.ObjectMetaApplyConfiguration{}
 	}
@@ -241,7 +242,15 @@ func (b *ClusterTrustBundleApplyConfiguration) ensureObjectMetaApplyConfiguratio
 // WithSpec sets the Spec field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
 // If called multiple times, the Spec field is set to the value of the last call.
-func (b *ClusterTrustBundleApplyConfiguration) WithSpec(value *ClusterTrustBundleSpecApplyConfiguration) *ClusterTrustBundleApplyConfiguration {
+func (b *FlowSchemaApplyConfiguration) WithSpec(value *FlowSchemaSpecApplyConfiguration) *FlowSchemaApplyConfiguration {
 	b.Spec = value
+	return b
+}
+
+// WithStatus sets the Status field in the declarative configuration to the given value
+// and returns the receiver, so that objects can be built by chaining "With" function invocations.
+// If called multiple times, the Status field is set to the value of the last call.
+func (b *FlowSchemaApplyConfiguration) WithStatus(value *FlowSchemaStatusApplyConfiguration) *FlowSchemaApplyConfiguration {
+	b.Status = value
 	return b
 }

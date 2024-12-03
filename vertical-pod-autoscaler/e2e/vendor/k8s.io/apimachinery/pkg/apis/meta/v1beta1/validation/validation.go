@@ -14,26 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package alicloud
+package validation
 
 import (
-	"testing"
-
-	"github.com/stretchr/testify/assert"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/validation/field"
 )
 
-func TestRRSACloudConfigEcsClientCreation(t *testing.T) {
-	t.Setenv(oidcProviderARN, "acs:ram::12345:oidc-provider/ack-rrsa-cb123")
-	t.Setenv(oidcTokenFilePath, "/var/run/secrets/tokens/oidc-token")
-	t.Setenv(roleARN, "acs:ram::12345:role/autoscaler-role")
-	t.Setenv(roleSessionName, "session")
-	t.Setenv(regionId, "cn-hangzhou")
-
-	cfg := &cloudConfig{}
-	assert.True(t, cfg.isValid())
-	assert.True(t, cfg.RRSAEnabled)
-
-	client, err := getEcsClient(cfg)
-	assert.NoError(t, err)
-	assert.NotNil(t, client)
+// ValidateTableOptions returns any invalid flags on TableOptions.
+func ValidateTableOptions(opts *metav1.TableOptions) field.ErrorList {
+	var allErrs field.ErrorList
+	switch opts.IncludeObject {
+	case metav1.IncludeMetadata, metav1.IncludeNone, metav1.IncludeObject, "":
+	default:
+		allErrs = append(allErrs, field.Invalid(field.NewPath("includeObject"), opts.IncludeObject, "must be 'Metadata', 'Object', 'None', or empty"))
+	}
+	return allErrs
 }

@@ -307,7 +307,10 @@ func (cb publicKeyCallback) auth(session []byte, user string, c packetConn, rand
 	}
 	var methods []string
 	var errSigAlgo error
-	for _, signer := range signers {
+
+	origSignersLen := len(signers)
+	for idx := 0; idx < len(signers); idx++ {
+		signer := signers[idx]
 		pub := signer.PublicKey()
 		as, algo, err := pickSignatureAlgorithm(signer, extensions)
 		if err != nil && errSigAlgo == nil {

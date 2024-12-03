@@ -87,6 +87,8 @@ type ScaleSet struct {
 
 	// uses Azure Dedicated Host
 	dedicatedHost bool
+
+	enableFastDeleteOnFailedProvisioning bool
 }
 
 // NewScaleSet creates a new NewScaleSet.

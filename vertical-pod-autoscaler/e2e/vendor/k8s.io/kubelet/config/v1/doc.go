@@ -14,13 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package common
+// +k8s:deepcopy-gen=package
+// +k8s:openapi-gen=true
+// +groupName=kubelet.config.k8s.io
 
-type Logger interface {
-	Printf(format string, args ...interface{})
-}
-
-func (c *Client) WithLogger(logger Logger) *Client {
-	c.logger = logger
-	return c
-}
+package v1 // import "k8s.io/kubelet/config/v1"

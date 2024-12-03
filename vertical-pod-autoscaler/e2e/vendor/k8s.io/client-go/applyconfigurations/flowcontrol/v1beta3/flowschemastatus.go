@@ -18,27 +18,27 @@ limitations under the License.
 
 package v1beta3
 
-// TypeCheckingApplyConfiguration represents an declarative configuration of the TypeChecking type for use
+// FlowSchemaStatusApplyConfiguration represents an declarative configuration of the FlowSchemaStatus type for use
 // with apply.
-type TypeCheckingApplyConfiguration struct {
-	ExpressionWarnings []ExpressionWarningApplyConfiguration `json:"expressionWarnings,omitempty"`
+type FlowSchemaStatusApplyConfiguration struct {
+	Conditions []FlowSchemaConditionApplyConfiguration `json:"conditions,omitempty"`
 }
 
-// TypeCheckingApplyConfiguration constructs an declarative configuration of the TypeChecking type for use with
+// FlowSchemaStatusApplyConfiguration constructs an declarative configuration of the FlowSchemaStatus type for use with
 // apply.
-func TypeChecking() *TypeCheckingApplyConfiguration {
-	return &TypeCheckingApplyConfiguration{}
+func FlowSchemaStatus() *FlowSchemaStatusApplyConfiguration {
+	return &FlowSchemaStatusApplyConfiguration{}
 }
 
-// WithExpressionWarnings adds the given value to the ExpressionWarnings field in the declarative configuration
+// WithConditions adds the given value to the Conditions field in the declarative configuration
 // and returns the receiver, so that objects can be build by chaining "With" function invocations.
-// If called multiple times, values provided by each call will be appended to the ExpressionWarnings field.
-func (b *TypeCheckingApplyConfiguration) WithExpressionWarnings(values ...*ExpressionWarningApplyConfiguration) *TypeCheckingApplyConfiguration {
+// If called multiple times, values provided by each call will be appended to the Conditions field.
+func (b *FlowSchemaStatusApplyConfiguration) WithConditions(values ...*FlowSchemaConditionApplyConfiguration) *FlowSchemaStatusApplyConfiguration {
 	for i := range values {
 		if values[i] == nil {
-			panic("nil value passed to WithExpressionWarnings")
+			panic("nil value passed to WithConditions")
 		}
-		b.ExpressionWarnings = append(b.ExpressionWarnings, *values[i])
+		b.Conditions = append(b.Conditions, *values[i])
 	}
 	return b
 }

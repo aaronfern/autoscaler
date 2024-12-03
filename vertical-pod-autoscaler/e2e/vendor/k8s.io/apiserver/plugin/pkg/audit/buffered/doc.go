@@ -1,8 +1,5 @@
-//go:build gofuzz
-// +build gofuzz
-
 /*
-Copyright 2023 The Kubernetes Authors.
+Copyright 2018 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,21 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package ini
-
-// Copy from https://github.com/aws/aws-sdk-go
-// May have been modified by Beijing Volcanoengine Technology Ltd.
-
-import (
-	"bytes"
-)
-
-func Fuzz(data []byte) int {
-	b := bytes.NewReader(data)
-
-	if _, err := Parse(b); err != nil {
-		return 0
-	}
-
-	return 1
-}
+// Package buffered provides an implementation for the audit.Backend interface
+// that batches incoming audit events and sends batches to the delegate audit.Backend.
+package buffered // import "k8s.io/apiserver/plugin/pkg/audit/buffered"

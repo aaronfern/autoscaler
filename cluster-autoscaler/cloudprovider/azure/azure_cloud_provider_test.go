@@ -141,7 +141,6 @@ func TestNodeGroups(t *testing.T) {
 func TestHasInstance(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
-	orchestrationModes := [2]compute.OrchestrationMode{compute.Uniform, compute.Flexible}
 
 	provider := newTestProvider(t)
 	mockVMSSClient := mockvmssclient.NewMockInterface(ctrl)
